@@ -11,6 +11,7 @@ import PrevButton from './PrevButton'
 import useSetupForm from './SetupForm.hook'
 import useSetupStep from './SetupStep.hook'
 import { StepContainer, ButtonContainer, MainContainer } from './Step.style'
+import StepTransition from './StepTransition'
 import SurfaceStep from './SurfaceStep'
 import TypologyStep from './TypologyStep'
 
@@ -40,13 +41,31 @@ const SetupSteps = ({ setupProperties, onSave }: SetupStepsI) => {
   return (
     <MainContainer>
       <StepContainer>
-        {currentStep === 0 && <BudgetStep {...budget} />}
-        {currentStep === 1 && <SurfaceStep {...surface} />}
+        {currentStep === 0 && (
+          <StepTransition>
+            <BudgetStep {...budget} />{' '}
+          </StepTransition>
+        )}
+        {currentStep === 1 && (
+          <StepTransition>
+            <SurfaceStep {...surface} />
+          </StepTransition>
+        )}
         {currentStep === 2 && (
-          <TypologyStep typologies={setupProperties.typologies} {...typology} />
+          <StepTransition>
+            <TypologyStep
+              typologies={setupProperties.typologies}
+              {...typology}
+            />
+          </StepTransition>
         )}
         {currentStep === 3 && (
-          <ExposuresStep exposures={setupProperties.exposures} {...exposures} />
+          <StepTransition>
+            <ExposuresStep
+              exposures={setupProperties.exposures}
+              {...exposures}
+            />
+          </StepTransition>
         )}
       </StepContainer>
       <ButtonContainer>
