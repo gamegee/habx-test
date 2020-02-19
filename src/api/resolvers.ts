@@ -61,7 +61,7 @@ export default {
     project: () => {
       return {
         id: 1,
-        name: 'Fourqueux en Yvelines',
+        name: 'Sim project',
         properties: PROJECT_PROPERTIES,
       }
     },
