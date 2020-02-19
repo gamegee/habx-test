@@ -39,3 +39,26 @@ export interface SetupStepsI {
   isLastStep: boolean
   currentStep: number
 }
+
+export interface FormHookI {
+  budget: FormHookItemI
+  surface: FormHookItemI
+  exposures: FormHookItemI
+  typology: FormHookItemI
+  currentStepInError: number
+  values: SetupInput
+}
+
+export interface SetupInput {
+  budget: number
+  surface: number
+  typology: number
+  exposures: string[]
+}
+
+export interface FormHookItemI {
+  error?: boolean
+  isDirty?: boolean
+  value: string[] | number
+  setValue: Function
+}

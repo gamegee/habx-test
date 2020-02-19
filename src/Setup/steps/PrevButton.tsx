@@ -4,11 +4,17 @@ import { Button } from '@habx/ui-core'
 
 interface PrevButtonI {
   onClick: Function
+  disabled?: boolean
 }
 
-const PrevButton = ({ onClick }: PrevButtonI) => {
+const PrevButton = ({ onClick, disabled }: PrevButtonI) => {
   return (
-    <Button onClick={() => onClick()} color="secondary">
+    <Button
+      link
+      disabled={disabled}
+      onClick={() => onClick()}
+      color="secondary"
+    >
       Précédent
     </Button>
   )

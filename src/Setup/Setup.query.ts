@@ -20,3 +20,8 @@ export const projectQuery = gql`
     }
   }
 `
+export const projectMutation = gql`
+  mutation($setup: SetupInput!) {
+    upsertSetup(setup: $setup)
+  }
+`

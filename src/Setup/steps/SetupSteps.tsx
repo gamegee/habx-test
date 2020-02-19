@@ -1,9 +1,11 @@
 import * as React from 'react'
 
+import { Button } from '@habx/ui-core'
+
 import { ProjectPropertiesI } from '../types/project'
 
 import BudgetStep from './BudgetStep'
-import ExposureStep from './ExposureStep'
+import ExposuresStep from './ExposuresStep'
 import NextButton from './NextButton'
 import PrevButton from './PrevButton'
 import useSetupForm from './SetupForm.hook'
@@ -14,9 +16,10 @@ import TypologyStep from './TypologyStep'
 
 interface SetupStepsI {
   setupProperties: ProjectPropertiesI
+  onSave: Function
 }
 
-const SetupSteps = ({ setupProperties }: SetupStepsI) => {
+const SetupSteps = ({ setupProperties, onSave }: SetupStepsI) => {
   const {
     currentStep,
     onPrevStep,
@@ -25,7 +28,14 @@ const SetupSteps = ({ setupProperties }: SetupStepsI) => {
     isLastStep,
   } = useSetupStep()
 
-  const { budget, surface, typology, exposure } = useSetupForm(setupProperties)
+  const {
+    budget,
+    surface,
+    typology,
+    exposures,
+    currentStepInError,
+    values,
+  } = useSetupForm(setupProperties)
 
   return (
     <MainContainer>
@@ -36,12 +46,30 @@ const SetupSteps = ({ setupProperties }: SetupStepsI) => {
           <TypologyStep typologies={setupProperties.typologies} {...typology} />
         )}
         {currentStep === 3 && (
-          <ExposureStep exposures={setupProperties.exposures} {...exposure} />
+          <ExposuresStep exposures={setupProperties.exposures} {...exposures} />
         )}
       </StepContainer>
       <ButtonContainer>
-        {(!isFirstStep && <PrevButton onClick={onPrevStep} />) || <div />}
-        {!isLastStep && <NextButton onClick={onNextStep} />}
+        {(!isFirstStep && (
+          <PrevButton
+            disabled={currentStep === currentStepInError}
+            onClick={onPrevStep}
+          />
+        )) || <div />}
+        {!isLastStep && (
+          <NextButton
+            disabled={currentStep === currentStepInError}
+            onClick={onNextStep}
+          />
+        )}
+        {isLastStep && (
+          <Button
+            disabled={currentStep === currentStepInError}
+            onClick={() => onSave({ variables: { setup: values } })}
+          >
+            Save
+          </Button>
+        )}
       </ButtonContainer>
     </MainContainer>
   )
